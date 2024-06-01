@@ -6,14 +6,26 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:password@postgres:5432/patients
       - ELASTICSEARCH_URL=http://elasticsearch:9200
-    volumes:
-      - .:/app
-      - /app/node_modules
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
     depends_on:
+      - rabbitmq
       - postgres
       - elasticsearch
     ports:
       - "3000:3000"
+
+  notification-services:
+    build:
+      context: ./services/notifications
+      dockerfile: Dockerfile
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/patients
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      - rabbitmq
+      - postgres
+      - elasticsearch
 
   postgres:
     image: postgres:13
@@ -25,6 +37,12 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.13.4

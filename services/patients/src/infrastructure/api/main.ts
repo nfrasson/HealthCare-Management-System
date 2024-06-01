@@ -1,11 +1,13 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
-import { LoggerPino } from "@infrastructure/logger/logger.pino";
 import { RegisterPatientDto } from "@application/dto/register-patient.dto";
 import { DatabaseService } from "@infrastructure/database/prisma/prisma.service";
 import { RegisterPatientUseCase } from "@core/use_cases/register-patient.use-case";
 import { PatientPrismaRepository } from "@infrastructure/database/repositories/patient.prisma.repository";
+import { LoggerPino } from "@infrastructure/logger/logger.pino";
+import { QueueAmqpService } from "@infrastructure/services/queue.amqp";
+import { IQueueService } from "@core/interfaces/services/queue.interface";
 
 const fastify = Fastify();
 
@@ -17,8 +19,11 @@ fastify.setErrorHandler((error, _request, reply) => {
   reply.status(500).send(error);
 });
 
+const queueService: IQueueService = new QueueAmqpService();
+
 const registerPatientUseCase = new RegisterPatientUseCase(
   new LoggerPino("patients", RegisterPatientUseCase.name),
+  queueService,
   new PatientPrismaRepository(new DatabaseService())
 );
 

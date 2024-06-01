@@ -40,3 +40,8 @@ The Notifications service sends alerts and reminders to patients and healthcare 
 
 ### Laboratory
 The Laboratory service manages lab test orders and results. It ensures that test data is accurately recorded and accessible to healthcare providers for informed decision-making.
+
+## TODO
+- Implement Kubernetes for container orchestration and management.
+- Send custom data to Elasticsearch as necessary.
+- Define shared service with common implementations.

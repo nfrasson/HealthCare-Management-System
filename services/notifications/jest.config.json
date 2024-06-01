@@ -1,0 +1,22 @@
+{
+  "verbose": true,
+  "clearMocks": true,
+  "transform": {
+    "^.+\\.(t|j)sx?$": ["@swc/jest"]
+  },
+  "testMatch": ["<rootDir>/__tests__/unit/**/*.test.ts"],
+  "moduleNameMapper": {
+    "@core/(.*)": "<rootDir>/src/core/$1",
+    "@mocks/(.*)": "<rootDir>/__mocks__/$1",
+    "@application/(.*)": "<rootDir>/src/application/$1",
+    "@infrastructure/(.*)": "<rootDir>/src/infrastructure/$1"
+  },
+  "coverageThreshold": {
+    "global": {
+      "lines": 100,
+      "branches": 100,
+      "functions": 100,
+      "statements": 100
+    }
+  }
+}
