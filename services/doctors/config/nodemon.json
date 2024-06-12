@@ -1,0 +1,5 @@
+{
+  "ext": "ts,json",
+  "watch": ["src"],
+  "exec": "npm run migrate:prod && npm run generate && npm run build && node dist/src/infrastructure/api/main"
+}

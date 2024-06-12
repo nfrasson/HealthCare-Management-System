@@ -45,3 +45,4 @@ The Laboratory service manages lab test orders and results. It ensures that test
 - Implement Kubernetes for container orchestration and management.
 - Send custom data to Elasticsearch as necessary.
 - Define shared service with common implementations.
+- Use grpc for synchronous communication between microservices

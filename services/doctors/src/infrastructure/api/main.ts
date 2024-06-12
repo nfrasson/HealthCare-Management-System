@@ -3,10 +3,10 @@ import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
 import { LoggerPino } from "@infrastructure/logger/logger.pino";
 import { QueueAmqpService } from "@infrastructure/services/queue.amqp";
-import { RegisterPatientDto } from "@application/dto/register-patient.dto";
+import { RegisterDoctorDto } from "@application/dto/register-doctor.dto";
 import { DatabaseService } from "@infrastructure/database/prisma/prisma.service";
-import { RegisterPatientUseCase } from "@core/use_cases/register-patient.use-case";
-import { PatientPrismaRepository } from "@infrastructure/database/repositories/patient.prisma.repository";
+import { RegisterDoctorUseCase } from "@core/use_cases/register-doctor.use-case";
+import { DoctorPrismaRepository } from "@infrastructure/database/repositories/doctor.prisma.repository";
 
 const fastify = Fastify();
 
@@ -18,14 +18,14 @@ fastify.setErrorHandler((error, _request, reply) => {
   reply.status(500).send(error);
 });
 
-const registerPatientUseCase = new RegisterPatientUseCase(
-  new LoggerPino("patients", RegisterPatientUseCase.name),
+const registerDoctorUseCase = new RegisterDoctorUseCase(
+  new LoggerPino("doctors", RegisterDoctorUseCase.name),
   new QueueAmqpService(),
-  new PatientPrismaRepository(new DatabaseService())
+  new DoctorPrismaRepository(new DatabaseService())
 );
 
-fastify.post("/patients/register", async (req, res) => {
-  await registerPatientUseCase.execute(new RegisterPatientDto(req.body));
+fastify.post("/doctors/register", async (req, res) => {
+  await registerDoctorUseCase.execute(new RegisterDoctorDto(req.body));
   res.status(201).send();
 });
 

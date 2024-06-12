@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/src",
+    "target": "ES2022",
+    "module": "commonjs",
+    "sourceMap": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "strictNullChecks": false,
+    "noUnusedParameters": true,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": false,
+    "paths": {
+      "@core/*": ["src/core/*"],
+      "@mocks/*": ["__mocks__/*"],
+      "@application/*": ["src/application/*"],
+      "@infrastructure/*": ["src/infrastructure/*"]
+    }
+  }
+}

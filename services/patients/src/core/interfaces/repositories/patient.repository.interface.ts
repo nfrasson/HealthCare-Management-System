@@ -1,4 +1,4 @@
-import { Patient } from "@core/entities/patient";
+import { Patient } from "@core/entities/patient.entity";
 
 export interface IPatientRepository {
     save(patient: Patient): Promise<void>;
