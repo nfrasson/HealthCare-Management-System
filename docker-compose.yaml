@@ -31,6 +31,22 @@ services:
     ports:
       - "3001:3001"
 
+  appointments-api:
+    build:
+      context: ./services/appointments
+      dockerfile: Dockerfile
+    environment:
+      - PORT=3002
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/appointments
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      - rabbitmq
+      - postgres
+      - elasticsearch
+    ports:
+      - "3002:3002"
+
   notification-services:
     build:
       context: ./services/notifications

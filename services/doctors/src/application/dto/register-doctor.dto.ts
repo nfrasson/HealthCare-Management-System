@@ -22,7 +22,7 @@ export class RegisterDoctorDto {
       throw new Error("Password is required");
     }
     if (!this?.specialities) {
-      throw new Error("Date of birth is required");
+      throw new Error("specialities is required");
     }
   }
 }
