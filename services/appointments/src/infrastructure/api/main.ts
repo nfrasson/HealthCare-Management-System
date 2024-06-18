@@ -2,11 +2,14 @@ import Fastify from "fastify";
 import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
 import { LoggerPino } from "@infrastructure/logger/logger.pino";
-import { QueueAmqpService } from "@infrastructure/services/queue.amqp";
+import { QueueAmqpService } from "@infrastructure/services/amqp.queue";
 import { ScheduleAppointmentDto } from "@application/dto/schedule-appointment.dto";
 import { DatabaseService } from "@infrastructure/database/prisma/prisma.service";
 import { ScheduleAppointmentUseCase } from "@core/use_cases/schedule-appointment.use-case";
 import { AppointmentPrismaRepository } from "@infrastructure/database/repositories/appointment.prisma.repository";
+import { DoctorGateway } from "@infrastructure/gateways/doctor.gateway";
+import { AxiosHttpService } from "@infrastructure/services/axios.http";
+import { PatientGateway } from "@infrastructure/gateways/patient.gateway";
 
 const fastify = Fastify();
 
@@ -21,6 +24,8 @@ fastify.setErrorHandler((error, _request, reply) => {
 const scheduleAppointmentUseCase = new ScheduleAppointmentUseCase(
   new LoggerPino("appointments", ScheduleAppointmentUseCase.name),
   new QueueAmqpService(),
+  new DoctorGateway(new AxiosHttpService()),
+  new PatientGateway(new AxiosHttpService()),
   new AppointmentPrismaRepository(new DatabaseService())
 );
 

@@ -5,7 +5,7 @@ CREATE TABLE "Doctor" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "registedAt" TIMESTAMP(3) NOT NULL,
-    "specialities" TEXT[],
+    "specialties" TEXT[],
 
     CONSTRAINT "Doctor_pkey" PRIMARY KEY ("id")
 );

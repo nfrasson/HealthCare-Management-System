@@ -1,6 +1,6 @@
+import { RegisterDoctorDto } from "@application/dto";
 import { Doctor } from "@core/entities/doctor.entity";
 import { ILogger } from "@core/interfaces/services/logger.interface";
-import { RegisterDoctorDto } from "@application/dto/register-doctor.dto";
 import { IQueueService } from "@core/interfaces/services/queue.interface";
 import { IDoctorRepository } from "@core/interfaces/repositories/doctor.repository.interface";
 

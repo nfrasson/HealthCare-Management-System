@@ -18,7 +18,7 @@ export class DoctorPrismaRepository implements IDoctorRepository {
       email: repositoryDoctor.email,
       password: repositoryDoctor.password,
       registedAt: repositoryDoctor.registedAt,
-      specialities: repositoryDoctor.specialities,
+      specialties: repositoryDoctor.specialties,
     });
   }
 
@@ -30,9 +30,17 @@ export class DoctorPrismaRepository implements IDoctorRepository {
         email: doctor.email,
         password: doctor.password,
         registedAt: doctor.registedAt,
-        specialities: doctor.specialities,
+        specialties: doctor.specialties,
       },
     });
+  }
+
+  async existsById(doctorId: string): Promise<boolean> {
+    const repositoryDoctor = await this.database.doctor.findUnique({
+      where: { id: doctorId },
+    });
+
+    return !!repositoryDoctor;
   }
 
   async findByEmail(email: string): Promise<DomainDoctor | null> {

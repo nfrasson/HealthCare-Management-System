@@ -8,7 +8,7 @@ export class Doctor {
   email: string;
   password: string;
   registedAt: Date;
-  specialities: string[];
+  specialties: string[];
 
   constructor(input: DoctorType) {
     this.id = input.id;
@@ -16,7 +16,7 @@ export class Doctor {
     this.email = input.email;
     this.password = input.password;
     this.registedAt = input.registedAt;
-    this.specialities = input.specialities;
+    this.specialties = input.specialties;
   }
 
   static create(input: Omit<DoctorType, "id" | "registedAt">) {

@@ -2,13 +2,13 @@ export class RegisterDoctorDto {
   name: string;
   email: string;
   password: string;
-  specialities: string[];
+  specialties: string[];
 
   constructor(input: any) {
     this.name = input.name;
     this.email = input.email;
     this.password = input.password;
-    this.specialities = input.specialities;
+    this.specialties = input.specialties;
   }
 
   validate() {
@@ -21,8 +21,8 @@ export class RegisterDoctorDto {
     if (!this?.password) {
       throw new Error("Password is required");
     }
-    if (!this?.specialities) {
-      throw new Error("specialities is required");
+    if (!this?.specialties) {
+      throw new Error("specialties is required");
     }
   }
 }
