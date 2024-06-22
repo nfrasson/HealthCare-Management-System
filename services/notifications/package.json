@@ -1,11 +1,8 @@
 {
   "scripts": {
     "build": "swc src -d dist",
-    "start:dev": "nodemon --config ./config/nodemon.json",
-    "test:unit": "jest --no-cache --detectOpenHandles --coverage",
-    "generate": "npx prisma generate --schema ./src/infrastructure/database/prisma/schema.prisma",
-    "migrate:dev": "npx prisma migrate dev --schema ./src/infrastructure/database/prisma/schema.prisma",
-    "migrate:prod": "npx prisma migrate deploy --schema ./src/infrastructure/database/prisma/schema.prisma"
+    "start:dev": "npx nodemon --config ./config/nodemon.json",
+    "test:unit": "jest --no-cache --detectOpenHandles --coverage"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",

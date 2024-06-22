@@ -1,5 +1,5 @@
-FROM node:22 AS builder
-WORKDIR /app
+FROM node:lts AS builder
+WORKDIR /home/node/app
 COPY .swcrc ./
 COPY src/ ./src/
 COPY package*.json ./
@@ -8,9 +8,9 @@ RUN npm ci --omit=dev --ignore-scripts
 RUN npm run generate
 RUN npm run build
 
-FROM node:22
-WORKDIR /app
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
+FROM node:lts
+WORKDIR /home/node/app
+COPY --from=builder /home/node/app/node_modules ./node_modules
+COPY --from=builder /home/node/app/dist ./dist
 EXPOSE 3000
-CMD ["node", "dist/src/infrastructure/api/main.js"]
+CMD ["npm", "run", "start:dev"]

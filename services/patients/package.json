@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "swc src -d dist",
-    "start:dev": "nodemon --config ./config/nodemon.json",
+    "start:dev": "npx nodemon --config ./config/nodemon.json",
     "test:unit": "jest --no-cache --detectOpenHandles --coverage",
     "generate": "npx prisma generate --schema ./src/infrastructure/database/prisma/schema.prisma",
     "migrate:dev": "npx prisma migrate dev --schema ./src/infrastructure/database/prisma/schema.prisma",
