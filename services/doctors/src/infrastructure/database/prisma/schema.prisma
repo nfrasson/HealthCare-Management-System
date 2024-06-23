@@ -7,11 +7,18 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+enum DoctorSpecialty {
+    GENERAL
+    PEDIATRIC
+    NEUROLOGIST
+    CARDIOLOGIST
+}
+
 model Doctor {
-    id           String   @id
+    id           String            @id
     name         String
-    email        String   @unique
+    email        String            @unique
     password     String
-    registeredAt   DateTime
-    specialties String[]
+    registeredAt DateTime
+    specialties  DoctorSpecialty[]
 }

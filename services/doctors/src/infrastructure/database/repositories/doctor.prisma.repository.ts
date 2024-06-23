@@ -1,12 +1,12 @@
 import { Doctor, PrismaClient } from "@prisma/client";
-import { Doctor as DomainDoctor } from "@core/entities/doctor.entity";
+import { DoctorSpecialty, Doctor as DomainDoctor } from "@core/entities/doctor.entity";
 import { IDoctorRepository } from "@core/interfaces/repositories/doctor.repository.interface";
 
 export class DoctorPrismaRepository implements IDoctorRepository {
   constructor(private readonly database: PrismaClient) {}
 
   private static mapRepositoryDoctorToDomainDoctor(
-    repositoryDoctor: Doctor
+    repositoryDoctor: Partial<Doctor>
   ): DomainDoctor {
     if (!repositoryDoctor) {
       return null;
@@ -18,7 +18,7 @@ export class DoctorPrismaRepository implements IDoctorRepository {
       email: repositoryDoctor.email,
       password: repositoryDoctor.password,
       registeredAt: repositoryDoctor.registeredAt,
-      specialties: repositoryDoctor.specialties,
+      specialties: repositoryDoctor.specialties as DoctorSpecialty[],
     });
   }
 
@@ -44,9 +44,16 @@ export class DoctorPrismaRepository implements IDoctorRepository {
     return !!repositoryDoctor;
   }
 
-  async findByEmail(email: string): Promise<DomainDoctor | null> {
+  async findById(doctorId: string): Promise<DomainDoctor | null> {
     const repositoryDoctor = await this.database.doctor.findUnique({
-      where: { email },
+      where: { id: doctorId },
+      select: {
+        name: true,
+        email: true,
+        password: true,
+        specialties: true,
+        registeredAt: true,
+      },
     });
 
     return DoctorPrismaRepository.mapRepositoryDoctorToDomainDoctor(

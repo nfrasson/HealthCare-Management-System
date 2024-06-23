@@ -1,6 +1,13 @@
 import { uuidV7 } from "@core/utils/uuid.generator";
 
-export type DoctorType = Doctor;
+export type DoctorType = Omit<Doctor, "hasSpecialty">;
+
+export enum DoctorSpecialty {
+  GENERAL = "GENERAL",
+  PEDIATRIC = "PEDIATRIC",
+  NEUROLOGIST = "NEUROLOGIST",
+  CARDIOLOGIST = "CARDIOLOGIST",
+}
 
 export class Doctor {
   id: string;
@@ -8,7 +15,7 @@ export class Doctor {
   email: string;
   password: string;
   registeredAt: Date;
-  specialties: string[];
+  specialties: DoctorSpecialty[];
 
   constructor(input: DoctorType) {
     this.id = input.id;
@@ -21,5 +28,9 @@ export class Doctor {
 
   static create(input: Omit<DoctorType, "id" | "registeredAt">) {
     return new Doctor({ ...input, id: uuidV7(), registeredAt: new Date() });
+  }
+
+  hasSpecialty(specialty: DoctorSpecialty) {
+    return !!this.specialties?.includes(specialty);
   }
 }

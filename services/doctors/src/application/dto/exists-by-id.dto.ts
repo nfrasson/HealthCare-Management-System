@@ -1,3 +1,5 @@
+import { InvalidInputException } from "@application/error/errors";
+
 export class DoctorExistsByIdDto {
   doctorId: string;
 
@@ -7,7 +9,7 @@ export class DoctorExistsByIdDto {
 
   validate() {
     if (!this?.doctorId) {
-      throw new Error("doctorId is required");
+      throw new InvalidInputException("doctorId is required");
     }
   }
 }
