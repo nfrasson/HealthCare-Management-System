@@ -7,9 +7,10 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Appointment {
+model Consultation {
     id        String   @id
     doctorId  String
     patientId String
+    specialty String
     date      DateTime
 }

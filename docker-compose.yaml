@@ -35,15 +35,15 @@ services:
     ports:
       - "3001:3001"
 
-  appointments-api:
+  consultations-api:
     build:
-      context: ./services/appointments
+      context: ./services/consultations
       dockerfile: Dockerfile
     volumes:
-      - ./services/appointments:/home/node/app
+      - ./services/consultations:/home/node/app
     environment:
       - PORT=3002
-      - DATABASE_URL=postgresql://postgres:password@postgres:5432/appointments
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/consultations
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
       - DOCTOR_API_URL=http://doctors-api:3001

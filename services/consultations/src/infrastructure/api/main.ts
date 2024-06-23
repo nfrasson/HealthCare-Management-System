@@ -8,9 +8,9 @@ import { AxiosHttpService } from "@infrastructure/services/axios.http";
 import { PatientGateway } from "@infrastructure/gateways/patient.gateway";
 import { DatabaseService } from "@infrastructure/database/prisma/prisma.service";
 import { HttpErrorHandler } from "@application/error/handlers/http-error.handler";
-import { ScheduleAppointmentDto } from "@application/dto/schedule-appointment.dto";
-import { ScheduleAppointmentUseCase } from "@core/use_cases/schedule-appointment.use-case";
-import { AppointmentPrismaRepository } from "@infrastructure/database/repositories/appointment.prisma.repository";
+import { ScheduleConsultationDto } from "@application/dto/schedule-consultation.dto";
+import { ScheduleConsultationUseCase } from "@core/use_cases/schedule-consultation.use-case";
+import { ConsultationPrismaRepository } from "@infrastructure/database/repositories/consultation.prisma.repository";
 
 const fastify = Fastify();
 
@@ -23,17 +23,17 @@ fastify.setErrorHandler((error, _request, reply) => {
   reply.status(result.statusCode).send(result);
 });
 
-const scheduleAppointmentUseCase = new ScheduleAppointmentUseCase(
-  new LoggerPino("appointments", ScheduleAppointmentUseCase.name),
+const scheduleConsultationUseCase = new ScheduleConsultationUseCase(
+  new LoggerPino("consultations", ScheduleConsultationUseCase.name),
   new QueueAmqpService(),
   new DoctorGateway(new AxiosHttpService()),
   new PatientGateway(new AxiosHttpService()),
-  new AppointmentPrismaRepository(new DatabaseService())
+  new ConsultationPrismaRepository(new DatabaseService())
 );
 
-fastify.post("/appointments/schedule", async (req, res) => {
-  const { id } = await scheduleAppointmentUseCase.execute(
-    new ScheduleAppointmentDto(req.body)
+fastify.post("/consultations/schedule", async (req, res) => {
+  const { id } = await scheduleConsultationUseCase.execute(
+    new ScheduleConsultationDto(req.body)
   );
   res.status(201).send({ id });
 });

@@ -1,24 +1,25 @@
-import { Appointment } from "@core/entities/appointment.entity";
+import { Consultation } from "@core/entities/consultation.entity";
 import { ILogger } from "@core/interfaces/services/logger.interface";
 import { IQueueService } from "@core/interfaces/services/queue.interface";
 import { IDoctorGateway } from "@core/interfaces/gateways/doctor.gateway";
 import { IPatientGateway } from "@core/interfaces/gateways/patient.gateway";
-import { ScheduleAppointmentDto } from "@application/dto/schedule-appointment.dto";
-import { IAppointmentRepository } from "@core/interfaces/repositories/appointment.repository.interface";
-import { DoctorSpecialtyException, NotFoundException } from "@application/error/errors";
+import { ScheduleConsultationDto } from "@application/dto/schedule-consultation.dto";
+import {
+  DoctorSpecialtyException,
+  NotFoundException,
+} from "@application/error/errors";
+import { IConsultationRepository } from "@core/interfaces/repositories/consultation.repository.interface";
 
-export class ScheduleAppointmentUseCase {
+export class ScheduleConsultationUseCase {
   constructor(
     private logger: ILogger,
     private queueService: IQueueService,
     private doctorGateway: IDoctorGateway,
     private patientGateway: IPatientGateway,
-    private appointmentRepository: IAppointmentRepository
+    private consultationRepository: IConsultationRepository
   ) {}
 
-  async execute(
-    input: ScheduleAppointmentDto
-  ): Promise<{ id: string }> {
+  async execute(input: ScheduleConsultationDto): Promise<{ id: string }> {
     input.validate();
 
     const [doctorExists, patientExists, doctorHasSpecialty] = await Promise.all(
@@ -38,16 +39,18 @@ export class ScheduleAppointmentUseCase {
     }
 
     if (!doctorHasSpecialty) {
-      throw new DoctorSpecialtyException("Doctor does not have the requested specialty");
+      throw new DoctorSpecialtyException(
+        "Doctor does not have the requested specialty"
+      );
     }
 
-    const appointment = Appointment.create(input);
-    await this.appointmentRepository.save(appointment);
+    const consultation = Consultation.create(input);
+    await this.consultationRepository.save(consultation);
 
-    this.queueService.produce("appointment_registered", appointment);
+    this.queueService.produce("consultation_registered", consultation);
 
-    this.logger.info("Appointment registered");
+    this.logger.info("Consultation registered");
 
-    return { id: appointment.id };
+    return { id: consultation.id };
   }
 }

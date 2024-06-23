@@ -1,6 +1,6 @@
 import { InvalidInputException } from "@application/error/errors";
 
-export class ScheduleAppointmentDto {
+export class ScheduleConsultationDto {
   date: Date;
   doctorId: string;
   patientId: string;
