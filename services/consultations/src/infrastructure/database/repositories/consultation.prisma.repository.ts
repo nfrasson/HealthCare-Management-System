@@ -1,4 +1,4 @@
-import { Consultation, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { Consultation as DomainConsultation } from "@core/entities/consultation.entity";
 import { IConsultationRepository } from "@core/interfaces/repositories/consultation.repository.interface";
 
