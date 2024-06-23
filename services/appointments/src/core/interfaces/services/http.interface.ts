@@ -1,3 +1,3 @@
 export interface IHttpService {
-    get(url: string): Promise<string | object | null>;
+  get<T>(url: string): Promise<T>;
 }

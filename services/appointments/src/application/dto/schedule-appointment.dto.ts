@@ -1,3 +1,5 @@
+import { InvalidInputException } from "@application/error/errors";
+
 export class ScheduleAppointmentDto {
   date: Date;
   doctorId: string;
@@ -5,24 +7,24 @@ export class ScheduleAppointmentDto {
   specialty: string;
 
   constructor(input: any) {
-    this.date = new Date(input.date);
     this.doctorId = input.doctorId;
     this.patientId = input.patientId;
     this.specialty = input.specialty;
+    this.date = input.date && new Date(input.date);
   }
 
   validate() {
     if (!this?.date) {
-      throw new Error("date is required");
+      throw new InvalidInputException("date is required");
     }
     if (!this?.doctorId) {
-      throw new Error("doctorId of birth is required");
+      throw new InvalidInputException("doctorId of birth is required");
     }
     if (!this?.patientId) {
-      throw new Error("patientId is required");
+      throw new InvalidInputException("patientId is required");
     }
     if (!this?.specialty) {
-      throw new Error("specialty is required");
+      throw new InvalidInputException("specialty is required");
     }
   }
 }

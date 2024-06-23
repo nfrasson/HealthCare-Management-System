@@ -46,6 +46,8 @@ services:
       - DATABASE_URL=postgresql://postgres:password@postgres:5432/appointments
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+      - DOCTOR_API_URL=http://doctors-api:3001
+      - PATIENT_API_URL=http://patients-api:3000
     depends_on:
       - rabbitmq
       - postgres

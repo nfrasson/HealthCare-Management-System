@@ -1,4 +1,4 @@
-import { randomUUID } from "crypto";
+import { uuidV7 } from "@core/utils/uuid.generator";
 
 export type AppointmentType = Appointment;
 
@@ -16,6 +16,6 @@ export class Appointment {
   }
 
   static create(input: Omit<AppointmentType, "id">) {
-    return new Appointment({ ...input, id: randomUUID() });
+    return new Appointment({ ...input, id: uuidV7() });
   }
 }

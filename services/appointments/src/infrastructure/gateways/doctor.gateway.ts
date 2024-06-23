@@ -1,18 +1,13 @@
 import { IHttpService } from "@core/interfaces/services/http.interface";
 import { IDoctorGateway } from "@core/interfaces/gateways/doctor.gateway";
-import { Doctor } from "@core/entities/doctor.entity";
 
 export class DoctorGateway implements IDoctorGateway {
   constructor(private httpService: IHttpService) {}
 
-  private mapToDoctor(doctor: any): Doctor | undefined {
-    return doctor && new Doctor(doctor);
-  }
-
   async existsById(doctorId: string): Promise<boolean> {
     try {
       await this.httpService.get(
-        `${process.env.DOCTOR_API_URL}/doctors/${doctorId}`
+        `${process.env.DOCTOR_API_URL}/doctors/${doctorId}/exists`
       );
       return true;
     } catch (error) {
@@ -25,13 +20,11 @@ export class DoctorGateway implements IDoctorGateway {
     specialty: string
   ): Promise<boolean> {
     try {
-      const response = await this.httpService.get(
-        `${process.env.DOCTOR_API_URL}/doctors/${doctorId}`
+      const response = await this.httpService.get<{ hasSpecialty: boolean }>(
+        `${process.env.DOCTOR_API_URL}/doctors/${doctorId}/specialties/${specialty}`
       );
 
-      const doctor = this.mapToDoctor(response);
-
-      return doctor.hasSpecialty(specialty);
+      return !!response?.hasSpecialty;
     } catch (error) {
       return false;
     }

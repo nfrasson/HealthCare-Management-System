@@ -7,7 +7,7 @@ export class PatientGateway implements IPatientGateway {
   async existsById(patientId: string): Promise<boolean> {
     try {
       await this.httpService.get(
-        `${process.env.PATIENT_API_URL}/patients/${patientId}`
+        `${process.env.PATIENT_API_URL}/patients/${patientId}/exists`
       );
       return true;
     } catch (error) {
