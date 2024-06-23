@@ -11,7 +11,7 @@ export class RegisterPatientUseCase {
     private patientRepository: IPatientRepository,
   ) {}
 
-  async execute(input: RegisterPatientDto): Promise<void> {
+  async execute(input: RegisterPatientDto): Promise<{ id: string }> {
     input.validate();
 
     const patient = Patient.create(input);
@@ -20,5 +20,7 @@ export class RegisterPatientUseCase {
     this.queueService.produce("patient_registered", patient);
 
     this.logger.info("Patient registered");
+
+    return { id: patient.id };
   }
 }

@@ -1,5 +1,5 @@
 import { DoctorExistsByIdDto } from "@application/dto";
-import { NotFoundException } from "@application/errors/not-found.error";
+import { NotFoundException } from "@application/error/errors";
 import { IDoctorRepository } from "@core/interfaces/repositories/doctor.repository.interface";
 
 export class DoctorExistsByIdUseCase {

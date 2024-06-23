@@ -8,10 +8,10 @@ datasource db {
 }
 
 model Patient {
-    id          String   @id
-    name        String
-    email       String   @unique
-    password    String
-    registeredAt  DateTime
-    dateOfBirth DateTime
+    id           String   @id
+    name         String
+    email        String   @unique
+    password     String
+    registeredAt DateTime
+    dateOfBirth  DateTime
 }

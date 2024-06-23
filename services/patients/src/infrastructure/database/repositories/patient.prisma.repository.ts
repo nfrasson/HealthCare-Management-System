@@ -44,4 +44,13 @@ export class PatientPrismaRepository implements IPatientRepository {
       repositoryPatient
     );
   }
+
+  async existsById(id: string): Promise<boolean> {
+    const repositoryPatient = await this.database.patient.findUnique({
+      where: { id },
+      select: { id: true },
+    });
+
+    return !!repositoryPatient;
+  }
 }

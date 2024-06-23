@@ -1,5 +1,4 @@
-import { NotFoundException } from "./not-found.error";
-import { BaseError } from "@application/errors/base.error";
+import { BaseError, NotFoundException } from "../errors";
 
 export class HttpErrorHandler {
   private statusCodeMapper: Map<string, number> = new Map([

@@ -1,4 +1,4 @@
-import { randomUUID } from "crypto";
+import { uuidV7 } from "@core/utils/uuid.generator";
 
 export type PatientType = Patient;
 
@@ -20,6 +20,6 @@ export class Patient {
   }
 
   static create(input: Omit<PatientType, "id" | "registeredAt">) {
-    return new Patient({ ...input, id: randomUUID(), registeredAt: new Date() });
+    return new Patient({ ...input, id: uuidV7(), registeredAt: new Date() });
   }
 }

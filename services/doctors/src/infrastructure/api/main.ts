@@ -11,7 +11,7 @@ import {
   DoctorExistsByIdUseCase,
 } from "@core/use_cases";
 import { DoctorExistsByIdDto } from "@application/dto";
-import { HttpErrorHandler } from "@application/errors/http-error.handler";
+import { HttpErrorHandler } from "@application/error/handlers/http-error.handler";
 
 const fastify = Fastify();
 

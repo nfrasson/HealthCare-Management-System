@@ -38,6 +38,7 @@ export class DoctorPrismaRepository implements IDoctorRepository {
   async existsById(doctorId: string): Promise<boolean> {
     const repositoryDoctor = await this.database.doctor.findUnique({
       where: { id: doctorId },
+      select: { id: true },
     });
 
     return !!repositoryDoctor;
