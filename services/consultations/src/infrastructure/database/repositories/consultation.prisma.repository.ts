@@ -33,13 +33,20 @@ export class ConsultationPrismaRepository implements IConsultationRepository {
     });
   }
 
-  async findByPatientId(patientId: string): Promise<DomainConsultation | null> {
-    const repositoryConsultation = await this.database.consultation.findFirst({
-      where: { patientId },
+  async alreadyScheduled(
+    patientId: string,
+    doctorId: string,
+    specialty: string
+  ): Promise<boolean> {
+    const consultation = await this.database.consultation.findFirst({
+      where: {
+        patientId,
+        doctorId,
+        specialty,
+      },
+      select: { id: true },
     });
 
-    return ConsultationPrismaRepository.mapRepositoryConsultationToDomainConsultation(
-      repositoryConsultation
-    );
+    return !!consultation;
   }
 }

@@ -5,8 +5,9 @@ import { IDoctorGateway } from "@core/interfaces/gateways/doctor.gateway";
 import { IPatientGateway } from "@core/interfaces/gateways/patient.gateway";
 import { ScheduleConsultationDto } from "@application/dto/schedule-consultation.dto";
 import {
-  DoctorSpecialtyException,
   NotFoundException,
+  DoctorSpecialtyException,
+  ConsultationAlreadyScheduledException,
 } from "@application/error/errors";
 import { IConsultationRepository } from "@core/interfaces/repositories/consultation.repository.interface";
 
@@ -22,13 +23,21 @@ export class ScheduleConsultationUseCase {
   async execute(input: ScheduleConsultationDto): Promise<{ id: string }> {
     input.validate();
 
-    const [doctorExists, patientExists, doctorHasSpecialty] = await Promise.all(
-      [
-        this.doctorGateway.existsById(input.doctorId),
-        this.patientGateway.existsById(input.patientId),
-        this.doctorGateway.validateSpecialty(input.doctorId, input.specialty),
-      ]
-    );
+    const [
+      doctorExists,
+      patientExists,
+      doctorHasSpecialty,
+      consultationAlreadyScheduled,
+    ] = await Promise.all([
+      this.doctorGateway.existsById(input.doctorId),
+      this.patientGateway.existsById(input.patientId),
+      this.doctorGateway.validateSpecialty(input.doctorId, input.specialty),
+      this.consultationRepository.alreadyScheduled(
+        input.patientId,
+        input.doctorId,
+        input.specialty
+      ),
+    ]);
 
     if (!doctorExists) {
       throw new NotFoundException("Doctor not found");
@@ -41,6 +50,12 @@ export class ScheduleConsultationUseCase {
     if (!doctorHasSpecialty) {
       throw new DoctorSpecialtyException(
         "Doctor does not have the requested specialty"
+      );
+    }
+
+    if (consultationAlreadyScheduled) {
+      throw new ConsultationAlreadyScheduledException(
+        "Consultation already scheduled with this doctor"
       );
     }
 
