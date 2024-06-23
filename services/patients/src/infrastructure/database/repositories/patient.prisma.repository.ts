@@ -17,7 +17,7 @@ export class PatientPrismaRepository implements IPatientRepository {
       name: repositoryPatient.name,
       email: repositoryPatient.email,
       password: repositoryPatient.password,
-      registedAt: repositoryPatient.registedAt,
+      registeredAt: repositoryPatient.registeredAt,
       dateOfBirth: repositoryPatient.dateOfBirth,
     });
   }
@@ -29,7 +29,7 @@ export class PatientPrismaRepository implements IPatientRepository {
         name: patient.name,
         email: patient.email,
         password: patient.password,
-        registedAt: patient.registedAt,
+        registeredAt: patient.registeredAt,
         dateOfBirth: new Date(patient.dateOfBirth).toISOString(),
       },
     });

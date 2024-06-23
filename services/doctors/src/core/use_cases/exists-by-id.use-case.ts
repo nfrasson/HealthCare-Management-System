@@ -1,4 +1,5 @@
 import { DoctorExistsByIdDto } from "@application/dto";
+import { NotFoundException } from "@application/errors/not-found.error";
 import { IDoctorRepository } from "@core/interfaces/repositories/doctor.repository.interface";
 
 export class DoctorExistsByIdUseCase {
@@ -9,6 +10,6 @@ export class DoctorExistsByIdUseCase {
 
     const exists = await this.doctorRepository.existsById(input.doctorId);
 
-    if (!exists) return NotFoundException("Doctor not found");
+    if (!exists) throw new NotFoundException("Doctor not found");
   }
 }

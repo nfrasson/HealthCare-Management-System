@@ -4,7 +4,7 @@ CREATE TABLE "Patient" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "registedAt" TIMESTAMP(3) NOT NULL,
+    "registeredAt" TIMESTAMP(3) NOT NULL,
     "dateOfBirth" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Patient_pkey" PRIMARY KEY ("id")

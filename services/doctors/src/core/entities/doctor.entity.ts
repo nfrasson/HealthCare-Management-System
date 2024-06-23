@@ -1,4 +1,4 @@
-import { randomUUID } from "crypto";
+import { uuidV7 } from "@core/utils/uuid.generator";
 
 export type DoctorType = Doctor;
 
@@ -7,7 +7,7 @@ export class Doctor {
   name: string;
   email: string;
   password: string;
-  registedAt: Date;
+  registeredAt: Date;
   specialties: string[];
 
   constructor(input: DoctorType) {
@@ -15,11 +15,11 @@ export class Doctor {
     this.name = input.name;
     this.email = input.email;
     this.password = input.password;
-    this.registedAt = input.registedAt;
+    this.registeredAt = input.registeredAt;
     this.specialties = input.specialties;
   }
 
-  static create(input: Omit<DoctorType, "id" | "registedAt">) {
-    return new Doctor({ ...input, id: randomUUID(), registedAt: new Date() });
+  static create(input: Omit<DoctorType, "id" | "registeredAt">) {
+    return new Doctor({ ...input, id: uuidV7(), registeredAt: new Date() });
   }
 }

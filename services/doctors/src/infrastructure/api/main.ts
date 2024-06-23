@@ -6,8 +6,12 @@ import { QueueAmqpService } from "@infrastructure/services/queue.amqp";
 import { RegisterDoctorDto } from "@application/dto/register-doctor.dto";
 import { DatabaseService } from "@infrastructure/database/prisma/prisma.service";
 import { DoctorPrismaRepository } from "@infrastructure/database/repositories/doctor.prisma.repository";
-import { DoctorExistsByIdUseCase, RegisterDoctorUseCase } from "@core/use_cases";
+import {
+  RegisterDoctorUseCase,
+  DoctorExistsByIdUseCase,
+} from "@core/use_cases";
 import { DoctorExistsByIdDto } from "@application/dto";
+import { HttpErrorHandler } from "@application/errors/http-error.handler";
 
 const fastify = Fastify();
 
@@ -15,8 +19,9 @@ fastify.register(cors);
 fastify.register(helmet);
 
 fastify.setErrorHandler((error, _request, reply) => {
-  console.error(error);
-  reply.status(500).send(error);
+  const result = new HttpErrorHandler().handle(error);
+
+  reply.status(result.statusCode).send(result);
 });
 
 const registerDoctorUseCase = new RegisterDoctorUseCase(
@@ -29,10 +34,11 @@ const doctorExistsByIdUseCase = new DoctorExistsByIdUseCase(
   new DoctorPrismaRepository(new DatabaseService())
 );
 
-
 fastify.post("/doctors/register", async (req, res) => {
-  await registerDoctorUseCase.execute(new RegisterDoctorDto(req.body));
-  res.status(201).send();
+  const { id } = await registerDoctorUseCase.execute(
+    new RegisterDoctorDto(req.body)
+  );
+  res.status(201).send( { id });
 });
 
 fastify.get("/doctors/:doctorId/exists", async (req, res) => {

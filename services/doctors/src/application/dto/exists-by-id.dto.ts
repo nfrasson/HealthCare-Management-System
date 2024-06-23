@@ -2,7 +2,7 @@ export class DoctorExistsByIdDto {
   doctorId: string;
 
   constructor(input: any) {
-    this.doctorId = input.name;
+    this.doctorId = input.doctorId;
   }
 
   validate() {

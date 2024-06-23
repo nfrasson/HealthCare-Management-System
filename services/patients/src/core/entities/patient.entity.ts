@@ -7,7 +7,7 @@ export class Patient {
   name: string;
   email: string;
   password: string;
-  registedAt: Date;
+  registeredAt: Date;
   dateOfBirth: Date;
 
   constructor(input: PatientType) {
@@ -15,11 +15,11 @@ export class Patient {
     this.name = input.name;
     this.email = input.email;
     this.password = input.password;
-    this.registedAt = input.registedAt;
+    this.registeredAt = input.registeredAt;
     this.dateOfBirth = input.dateOfBirth;
   }
 
-  static create(input: Omit<PatientType, "id" | "registedAt">) {
-    return new Patient({ ...input, id: randomUUID(), registedAt: new Date() });
+  static create(input: Omit<PatientType, "id" | "registeredAt">) {
+    return new Patient({ ...input, id: randomUUID(), registeredAt: new Date() });
   }
 }

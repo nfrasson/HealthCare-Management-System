@@ -17,7 +17,7 @@ export class DoctorPrismaRepository implements IDoctorRepository {
       name: repositoryDoctor.name,
       email: repositoryDoctor.email,
       password: repositoryDoctor.password,
-      registedAt: repositoryDoctor.registedAt,
+      registeredAt: repositoryDoctor.registeredAt,
       specialties: repositoryDoctor.specialties,
     });
   }
@@ -29,7 +29,7 @@ export class DoctorPrismaRepository implements IDoctorRepository {
         name: doctor.name,
         email: doctor.email,
         password: doctor.password,
-        registedAt: doctor.registedAt,
+        registeredAt: doctor.registeredAt,
         specialties: doctor.specialties,
       },
     });
