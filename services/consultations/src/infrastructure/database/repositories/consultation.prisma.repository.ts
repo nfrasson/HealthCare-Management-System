@@ -5,22 +5,6 @@ import { IConsultationRepository } from "@core/interfaces/repositories/consultat
 export class ConsultationPrismaRepository implements IConsultationRepository {
   constructor(private readonly database: PrismaClient) {}
 
-  private static mapRepositoryConsultationToDomainConsultation(
-    repositoryConsultation: Consultation
-  ): DomainConsultation {
-    if (!repositoryConsultation) {
-      return null;
-    }
-
-    return new DomainConsultation({
-      id: repositoryConsultation.id,
-      date: repositoryConsultation.date,
-      doctorId: repositoryConsultation.doctorId,
-      patientId: repositoryConsultation.patientId,
-      specialty: repositoryConsultation.specialty,
-    });
-  }
-
   async save(consultation: DomainConsultation): Promise<void> {
     await this.database.consultation.create({
       data: {
